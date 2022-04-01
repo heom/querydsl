@@ -21,3 +21,6 @@
   4. 우측 Gradle -> Tasks -> other -> compileQuerydsl 실행
   5. 설정 위치에 QClass 생성 확인
      - **[중요]** @Entity가 포함된 Class들만 QClass가 생성됨
+------------
+  - ** **
+     
