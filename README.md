@@ -3,7 +3,7 @@
 
 ## 프로젝트 개발 구성
 - Java 8
-- Spring Boot(+Gradle) 2.6.6 -> 2.2.2
+- Spring Boot(+Gradle) 2.6.6
 - H2
 - SpringDataJPA
 - JUnit5
@@ -19,4 +19,5 @@
   2. **[중요]** 스프링 부트 2.6 이상, Querydsl 5.0 부터 설정 방법이 약간 변경됨
   3. **[참조]** build.gradle 
   4. 우측 Gradle -> Tasks -> other -> compileQuerydsl 실행
-  5. **[중요]** 설정 위치에 QClass 생성 확인
+  5. 설정 위치에 QClass 생성 확인
+     - **[중요]** @Entity가 포함된 Class들만 QClass가 생성됨
