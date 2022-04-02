@@ -79,3 +79,6 @@
   - nullsLast() , nullsFirst() : null 데이터 순서 부여
 ------------
 - **Paging**
+  - **[중요]** 기존 사용하던 fetchResults() Deprecated, 리스트와 총 갯수 따로 쿼리 작성 필요
+------------
+- **Aggregate**
