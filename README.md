@@ -11,8 +11,8 @@
 
 ## 추가 정리
 - **Querydsl?**
-  - SPRING-DATA-JPA만 사용할 경우, 복잡한 쿼리와 동적쿼리 사용이 어려움.  
-    따라서, 상기 문제를 Querydsl 추가로 사용하여 해결함.
+  - SPRING-DATA-JPA만 사용할 경우, 복잡한 쿼리와 동적쿼리 사용이 어려움  
+    따라서, 상기 문제를 Querydsl 추가로 사용하여 해결함
 ------------
 - **Querydsl Setting**
   - **[참조]** 강의 QueryDSL 설정과 검증
@@ -82,3 +82,15 @@
   - **[중요]** 기존 사용하던 fetchResults() Deprecated, 리스트와 총 갯수 따로 쿼리 작성 필요
 ------------
 - **Aggregate**
+  - **[중요]** List<Tuple> 객체로 해당 값 가져옴, 하지만 DTO 가져오는 방법을 실무에서 더 많이 사용
+    - ex)
+      - COUNT(m), //회원수
+      - SUM(m.age), //나이 합
+      - AVG(m.age), //평균 나이
+      - MAX(m.age), //최대 나이
+      - MIN(m.age) //최소 나이
+  - group by, having 
+    - **[참조]**
+      - me.study.jpaquerydsl.QuerydslBasicTest.class
+------------
+- **Join 기본**
