@@ -2,7 +2,6 @@ package me.study.jpaquerydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import me.study.jpaquerydsl.entity.Member;
-import me.study.jpaquerydsl.entity.QMember;
 import me.study.jpaquerydsl.entity.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import static me.study.jpaquerydsl.entity.QMember.member;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -55,15 +55,40 @@ public class QuerydslBasicTest {
 
     @Test
     public void startQuerydsl(){
-        QMember qMember = new QMember("m");
-
-        Member findMember = queryFactory.select(qMember)
-                .from(qMember)
-                .where(qMember.username.eq("member1"))
+        //member1을 찾아라.
+        Member findMember = queryFactory.select(member)
+                .from(member)
+                .where(member.username.eq("member1"))
                 .fetchOne();
 
         assertThat(findMember.getUsername()).isEqualTo("member1");
-
     }
 
+    /**
+     * @Description [Querydsl Where]
+     **/
+    @Test
+    public void search(){
+        Member findMember = queryFactory.selectFrom(member)
+                .where(member.username.eq("member1")
+                        .and(member.age.eq(10)))
+                .fetchOne();
+
+        assertThat(findMember.getUsername()).isEqualTo("member1");
+    }
+
+    /**
+     * @Description [Querydsl Where] and 쉼표로 가능
+     **/
+    @Test
+    public void searchAndParam(){
+        Member findMember = queryFactory.selectFrom(member)
+                .where(
+                        member.username.eq("member1")
+                        , member.age.eq(10)
+                )
+                .fetchOne();
+
+        assertThat(findMember.getUsername()).isEqualTo("member1");
+    }
 }

@@ -25,5 +25,36 @@
 - **JPQL vs Querydsl**
   - JPQL은 Query를 String 형태로 만들기 때문에, runtime error 발생
   - Querydsl은 객체지향 자바로 만들기 때문에, compile error 발생
-  
+------------
+- **Querydsl Where**
+  - 기본
+    - ex)
+      - member.username.eq("member1") // username = 'member1'
+      - member.username.ne("member1") //username != 'member1'
+      - member.username.eq("member1").not() // username != 'member1'
+      - member.username.isNotNull() //이름이 is not null
+      - member.age.in(10, 20) // age in (10,20)
+      - member.age.notIn(10, 20) // age not in (10, 20)
+      - member.age.between(10,30) //between 10, 30
+      - member.age.goe(30) // age >= 30
+      - member.age.gt(30) // age > 30
+      - member.age.loe(30) // age <= 30
+      - member.age.lt(30) // age < 30
+      - member.username.like("member%") //like 검색
+      - member.username.contains("member") // like ‘%member%’ 검색
+      - member.username.startsWith("member") //like ‘member%’ 검색
+  - and 조건은 쉼표로 가능 
+    - ex)
+      - Member findMember = queryFactory.selectFrom(member)  
+                .where(member.username.eq("member1")  
+                        .and(member.age.eq(10)))  
+                .fetchOne();
      
+      - Member findMember = queryFactory.selectFrom(member)  
+                .where(  
+                        member.username.eq("member1")  
+                        , member.age.eq(10)  
+                )  
+                .fetchOne();
+------------
+- **Querydsl Where**
