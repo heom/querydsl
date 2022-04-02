@@ -93,4 +93,17 @@
     - **[참조]**
       - me.study.jpaquerydsl.QuerydslBasicTest.class
 ------------
-- **Join 기본**
+- **Join[basic]**
+  - **[중요]** 조인의 기본 문법은 첫 번째 파라미터에 조인 대상을 지정하고, 두 번째 파라미터에 별칭(alias)으로 사용할 Q 타입을 지정하면 된다
+    - ex)
+      - join(조인 대상, 별칭으로 사용할 Q타입)
+  - join() , innerJoin() : 내부 조인(inner join)
+  - leftJoin() : left 외부 조인(left outer join)
+  - rightJoin() : right 외부 조인(right outer join)
+  - JPQL의 on 과 성능 최적화를 위한 fetch 조인 제공
+  - **[중요]** 세타조인(Theta Join) - JPA 특성상 @Entity 내 연관관계가 없으면 조인이 안될 거 같지만 가능!!
+    - from 절에 여러 엔티티를 선택해서 세타 조인
+    - **[참조]**
+      - me.study.jpaquerydsl.QuerydslBasicTest.class
+------------
+- **Join[on]**
