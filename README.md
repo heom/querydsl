@@ -123,3 +123,9 @@
     - me.study.jpaquerydsl.QuerydslBasicTest.class
 ------------
 - **Join[fetchJoin]**
+  - 페치 조인은 SQL에서 제공하는 기능은 아니다. SQL조인을 활용해서 연관된 엔티티를 SQL 한번에 조회하는 기능이다.   
+    주로 성능 최적화에 사용하는 방법이다.
+  - fetch = FetchType.LAZY - 지연로딩할 때, 데이터 한번에 들고 오는 방법
+  - join(), leftJoin() 등 조인 기능 뒤에 fetchJoin() 이라고 추가하면 된다.
+  - **[참조]**
+    - me.study.jpaquerydsl.QuerydslBasicTest.class
