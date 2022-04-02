@@ -103,7 +103,23 @@
   - JPQL의 on 과 성능 최적화를 위한 fetch 조인 제공
   - **[중요]** 세타조인(Theta Join) - JPA 특성상 @Entity 내 연관관계가 없으면 조인이 안될 거 같지만 가능!!
     - from 절에 여러 엔티티를 선택해서 세타 조인
+    - **[중요]** 외부 조인 불가능
     - **[참조]**
       - me.study.jpaquerydsl.QuerydslBasicTest.class
 ------------
 - **Join[on]**
+  - on절을 활용한 조인(JPA 2.1부터 지원)
+  - 조인 대상 필터링
+    - on 절을 활용해 조인 대상을 필터링 할 때, 외부조인이 아니라 내부조인(inner join)을 사용하면,  
+    where 절에서 필터링 하는 것과 기능이 동일하다. 따라서 on 절을 활용한 조인 대상 필터링을 사용할 때,  
+    내부조인 이면 익숙한 where 절로 해결하고, 정말 외부조인이 필요한 경우에만 이 기능을 사용하자.  
+  - 연관관계 없는 entity 외부 조인
+    - 하이버네이트 5.1부터 on 을 사용해서 서로 관계가 없는 필드로 외부 조인하는 기능이 추가되었다.  
+      물론 내부 조인도 가능하다.
+    - **[중요]** 주의! 문법을 잘 봐야 한다. leftJoin() 부분에 일반 조인과 다르게 엔티티 하나만 들어간다.
+      - 일반조인: leftJoin(member.team, team) <- entity 내 fk 매칭 추가o
+      - on조인: from(member).leftJoin(team).on(xxx) <- entity 내 fk 매칭 추가x, 오직 on 절만
+  - **[참조]**
+    - me.study.jpaquerydsl.QuerydslBasicTest.class
+------------
+- **Join[fetchJoin]**

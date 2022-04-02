@@ -170,6 +170,7 @@ public class QuerydslBasicTest {
                 .offset(1) //0부터 시작(zero index)
                 .limit(2) //최대 2건 조회
                 .fetch();
+
         assertThat(result.size()).isEqualTo(2);
     }
 
@@ -218,6 +219,7 @@ public class QuerydslBasicTest {
                         member.age.min())
                 .from(member)
                 .fetch();
+
         Tuple tuple = result.get(0);
         assertThat(tuple.get(member.count())).isEqualTo(4);
         assertThat(tuple.get(member.age.sum())).isEqualTo(100);
@@ -245,7 +247,6 @@ public class QuerydslBasicTest {
 
         assertThat(teamA.get(team.name)).isEqualTo("teamA");
         assertThat(teamA.get(member.age.avg())).isEqualTo(15);
-
         assertThat(teamB.get(team.name)).isEqualTo("teamB");
         assertThat(teamB.get(member.age.avg())).isEqualTo(35);
     }
@@ -261,6 +262,7 @@ public class QuerydslBasicTest {
                 .join(member.team, team)
                 .where(team.name.eq("teamA"))
                 .fetch();
+
         assertThat(result)
                 .extracting("username")
                 .containsExactly("member1", "member2");
@@ -275,13 +277,59 @@ public class QuerydslBasicTest {
     public void theta_join(){
         em.persist(new Member("teamA"));
         em.persist(new Member("teamB"));
+        em.persist(new Member("teamC"));
+
         List<Member> result = queryFactory
                 .select(member)
                 .from(member, team)
                 .where(member.username.eq(team.name))
                 .fetch();
+
         assertThat(result)
                 .extracting("username")
                 .containsExactly("teamA", "teamB");
+    }
+
+    /**
+     * @Description [Join[on]] 조인 대상 필터링
+     * 회원과 팀을 조인하면서, 팀 이름이 teamA인 팀만 조인, 회원은 모두 조회
+     * JPQL: SELECT m, t FROM Member m LEFT JOIN m.team t on t.name = 'teamA'
+     * SQL: SELECT m.*, t.* FROM Member m LEFT JOIN Team t ON m.TEAM_ID=t.id and t.name='teamA'
+     **/
+    @Test
+    public void join_on_filtering(){
+        List<Tuple> result = queryFactory
+                .select(member, team)
+                .from(member)
+                .leftJoin(member.team, team)
+                    .on(team.name.eq("teamA"))
+                .fetch();
+
+        for (Tuple tuple : result) {
+            System.out.println("tuple = " + tuple);
+        }
+    }
+
+    /**
+     * @Description [Join[on]] 연관관계 없는 entity 외부 조인
+     * 회원의 이름과 팀의 이름이 같은 대상 외부 조인
+     * JPQL: SELECT m, t FROM Member m LEFT JOIN Team t on m.username = t.name
+     * SQL: SELECT m.*, t.* FROM Member m LEFT JOIN Team t ON m.username = t.name
+     **/
+    @Test
+    public void join_on_no_relation(){
+        em.persist(new Member("teamA"));
+        em.persist(new Member("teamB"));
+
+        List<Tuple> result = queryFactory
+                .select(member, team)
+                .from(member)
+                .leftJoin(team)
+                    .on(member.username.eq(team.name))
+                .fetch();
+
+        for (Tuple tuple : result) {
+            System.out.println("t=" + tuple);
+        }
     }
 }
