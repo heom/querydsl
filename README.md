@@ -75,3 +75,7 @@
         .fetchOne();  
 ------------
 - **Sort**
+  - desc() , asc() : 일반 정렬
+  - nullsLast() , nullsFirst() : null 데이터 순서 부여
+------------
+- **Paging**
