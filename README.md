@@ -129,3 +129,16 @@
   - join(), leftJoin() 등 조인 기능 뒤에 fetchJoin() 이라고 추가하면 된다.
   - **[참조]**
     - me.study.jpaquerydsl.QuerydslBasicTest.class
+------------
+- **SubQuery**
+  - com.querydsl.jpa.JPAExpressions 사용
+  - **[중요]** from 절의 서브쿼리 한계
+    - JPA JPQL 서브쿼리의 한계점으로 from 절의 서브쿼리(인라인 뷰)는 지원하지 않는다.   
+      당연히 Querydsl도 지원하지 않는다. 하이버네이트 구현체를 사용하면 select 절의 서브쿼리는 지원한다.   
+      Querydsl도 하이버네이트 구현체를 사용하면 select 절의 서브쿼리를 지원한다.
+    - from 절의 서브쿼리 해결방안
+      - 서브쿼리를 join으로 변경한다. (가능한 상황도 있고, 불가능한 상황도 있다.)
+      - 애플리케이션에서 쿼리를 2번 분리해서 실행한다.
+      - nativeSQL을 사용한다.
+  - **[참조]**
+    - me.study.jpaquerydsl.QuerydslBasicTest.class
