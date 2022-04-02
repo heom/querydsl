@@ -1,5 +1,6 @@
 package me.study.jpaquerydsl;
 
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import me.study.jpaquerydsl.entity.Member;
 import me.study.jpaquerydsl.entity.Team;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 import static me.study.jpaquerydsl.entity.QMember.member;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -65,7 +67,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Querydsl Where]
+     * @Description [Where]
      **/
     @Test
     public void search(){
@@ -78,7 +80,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Querydsl Where] and 쉼표로 가능
+     * @Description [Where] and 쉼표로 가능
      **/
     @Test
     public void searchAndParam(){
@@ -90,5 +92,42 @@ public class QuerydslBasicTest {
                 .fetchOne();
 
         assertThat(findMember.getUsername()).isEqualTo("member1");
+    }
+
+    /**
+     * @Description [Select]
+     **/
+    @Test
+    public void resultFetch(){
+        //List
+        List<Member> fetch = queryFactory
+                .selectFrom(member)
+                .fetch();
+
+        //단 건
+        Member findMember1 = queryFactory
+                .selectFrom(member)
+                .where(member.username.eq("member1"))
+                .fetchOne();
+
+        //처음 한 건 조회
+        Member findMember2 = queryFactory
+                .selectFrom(member)
+                .fetchFirst();
+
+        //페이징에서 사용 Deprecated => fetch() 권장
+        QueryResults<Member> results = queryFactory
+                .selectFrom(member)
+                .fetchResults();
+
+        //count 쿼리로 변경 Deprecated => 아래 쿼리 권장
+        long count = queryFactory
+                .selectFrom(member)
+                .fetchCount();
+        Long totalCount = queryFactory
+                //.select(Wildcard.count) //select count(*)
+                .select(member.count()) //select count(member.id)
+                .from(member)
+                .fetchOne();
     }
 }

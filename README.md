@@ -26,7 +26,7 @@
   - JPQL은 Query를 String 형태로 만들기 때문에, runtime error 발생
   - Querydsl은 객체지향 자바로 만들기 때문에, compile error 발생
 ------------
-- **Querydsl Where**
+- **Where**
   - 기본
     - ex)
       - member.username.eq("member1") // username = 'member1'
@@ -57,4 +57,21 @@
                 )  
                 .fetchOne();
 ------------
-- **Querydsl Where**
+- **Select**
+  - fetch() : 리스트 조회, 데이터 없으면 빈 리스트 반환
+  - fetchOne() : 단 건 조회
+    - 결과가 없으면 : null
+    - 결과가 둘 이상이면 : com.querydsl.core.NonUniqueResultException
+  - fetchFirst() : limit(1).fetchOne()
+  - fetchResults() : 페이징 정보 포함, total count 쿼리 추가 실행
+    - **[중요]** Deprecated(향후 미지원) - fetch() 권장
+  - fetchCount() : count 쿼리로 변경해서 count 수 조회
+    - **[중요]** Deprecated(향후 미지원) - fetchOne() 권장
+    - ex)
+      - Long totalCount = queryFactory  
+        //.select(Wildcard.count) //select count(*)  
+        .select(member.count()) //select count(member.id)  
+        .from(member)  
+        .fetchOne();  
+------------
+- **Sort**
