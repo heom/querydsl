@@ -142,3 +142,10 @@
       - nativeSQL을 사용한다.
   - **[참조]**
     - me.study.jpaquerydsl.QuerydslBasicTest.class
+------------
+- **Case**
+  - select, 조건절(where), order by에서 사용 가능
+  - **[참조]**
+    - me.study.jpaquerydsl.QuerydslBasicTest.class
+------------
+- **상수, 문자 더하기**
