@@ -148,4 +148,11 @@
   - **[참조]**
     - me.study.jpaquerydsl.QuerydslBasicTest.class
 ------------
-- **상수, 문자 더하기**
+- **Constant, Concat**
+  - Constant 
+    - 상수가 필요하면 Expressions.constant(xxx) 사용
+    - 최적화가 가능하면 SQL에 constant 값을 넘기지 않는다. 상수를 더하는 것 처럼 최적화가 어려우면 SQL에 constant 값을 넘긴다.
+  - Concat 
+    - member.age.stringValue() 부분이 중요한데, 문자가 아닌 다른 타입들은 stringValue()로 문자로 변환할 수 있다. 이 방법은 ENUM을 처리할 때도 자주 사용한다.
+  - **[참조]**
+    - me.study.jpaquerydsl.QuerydslBasicTest.class
