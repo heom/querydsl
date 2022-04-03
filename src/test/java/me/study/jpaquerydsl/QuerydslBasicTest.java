@@ -2,11 +2,16 @@ package me.study.jpaquerydsl;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import me.study.jpaquerydsl.dto.MemberDto;
+import me.study.jpaquerydsl.dto.QMemberDto;
+import me.study.jpaquerydsl.dto.UserDto;
 import me.study.jpaquerydsl.entity.Member;
 import me.study.jpaquerydsl.entity.QMember;
 import me.study.jpaquerydsl.entity.Team;
@@ -548,7 +553,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Constant] 상수
+     * @Description [Constant, Concat] Constant
      **/
     @Test
     public void constant(){
@@ -561,7 +566,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Constant] 문자 더하기
+     * @Description [Constant, Concat] Concat
      **/
     @Test
     public void concat(){
@@ -572,5 +577,147 @@ public class QuerydslBasicTest {
                 .fetchOne();
 
         System.out.println(result);
+    }
+
+    /**
+     * @Description [Projection(Result)] 하나의 타입
+     **/
+    @Test
+    public void simpleProjection(){
+        List<String> result = queryFactory
+                .select(member.username)
+                .from(member)
+                .fetch();
+
+        for(String s : result){
+            System.out.println(s);
+        }
+    }
+
+    /**
+     * @Description [Projection(Result)] 둘 이상의 타입(Tuple)
+     **/
+    @Test
+    public void tupleProjection(){
+        List<Tuple> result = queryFactory
+                .select(member.username, member.age)
+                .from(member)
+                .fetch();
+
+        for(Tuple t : result){
+            String username = t.get(member.username);
+            Integer age = t.get(member.age);
+
+            System.out.println("username = "+ username);
+            System.out.println("age = "+ age);
+        }
+    }
+
+    /**
+     * @Description [Projection(Result)] 둘 이상의 타입(DTO) 변수명 일치 - 순수 JPQL 경우
+     * 생성자를 사용해줘야함
+     **/
+    @Test
+    public void findDtoByJPQL(){
+        List<MemberDto> resultList = em.createQuery("select new me.study.jpaquerydsl.dto.MemberDto(m.username, m.age) from Member m", MemberDto.class)
+                .getResultList();
+
+        for(MemberDto m : resultList){
+            System.out.println("memberDto = "+m);
+        }
+    }
+
+    /**
+     * @Description [Projection(Result)] 둘 이상의 타입(DTO) 변수명 일치 - Querydsl
+     * 프로퍼티 접근 - Setter
+     **/
+    @Test
+    public void findDtoBySetter(){
+        List<MemberDto> resultList = queryFactory
+                .select(Projections.bean(MemberDto.class
+                        , member.username
+                        , member.age))
+                .from(member)
+                .fetch();
+
+        for(MemberDto m : resultList){
+            System.out.println("memberDto = "+m);
+        }
+    }
+
+    /**
+     * @Description [Projection(Result)] 둘 이상의 타입(DTO) 변수명 일치 - Querydsl
+     * 필드 직접 접근
+     **/
+    @Test
+    public void findDtoByField(){
+        List<MemberDto> resultList = queryFactory
+                .select(Projections.fields(MemberDto.class
+                        , member.username
+                        , member.age))
+                .from(member)
+                .fetch();
+
+        for(MemberDto m : resultList){
+            System.out.println("memberDto = "+m);
+        }
+    }
+
+    /**
+     * @Description [Projection(Result)] 둘 이상의 타입(DTO) 변수명 일치 - Querydsl
+     * 생성자 사용
+     **/
+    @Test
+    public void findDtoByConstructor(){
+        List<MemberDto> resultList = queryFactory
+                .select(Projections.constructor(MemberDto.class
+                        , member.username
+                        , member.age))
+                .from(member)
+                .fetch();
+
+        for(MemberDto m : resultList){
+            System.out.println("memberDto = "+m);
+        }
+    }
+
+    /**
+     * @Description [Projection(Result)] 둘 이상의 타입(DTO) 변수명 불일치(username != name) - Querydsl
+     * 별칭 사용
+     **/
+    @Test
+    public void findDtoByAlias(){
+        QMember memberSub = new QMember("memberSub");
+
+        List<UserDto> resultList = queryFactory
+                .select(Projections.fields(UserDto.class
+                                , member.username.as("name")
+                                , ExpressionUtils.as(
+                                        JPAExpressions
+                                                .select(memberSub.age.max())
+                                                .from(memberSub), "age")
+                        )
+                ).from(member)
+                .fetch();
+
+        for(UserDto u : resultList){
+            System.out.println("userDto = "+u);
+        }
+    }
+
+    /**
+     * @Description [Projection(Result)] 둘 이상의 타입(DTO) 변수명 일치 - Querydsl(@QueryProjection)
+     * Q Class 생성
+     **/
+    @Test
+    public void findDtoByQueryProjection(){
+        List<MemberDto> resultList = queryFactory
+                    .select(new QMemberDto(member.username, member.age))
+                    .from(member)
+                    .fetch();
+
+        for(MemberDto m : resultList){
+            System.out.println("memberDto = "+m);
+        }
     }
 }

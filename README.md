@@ -17,7 +17,7 @@
 - **Querydsl Setting**
   - **[참조]** 강의 QueryDSL 설정과 검증
   - **[중요]** 스프링 부트 2.6 이상, Querydsl 5.0 부터 설정 방법이 약간 변경됨
-  - **[참조]** build.gradle 
+  - **[참조]** [build.gradle](build.gradle) 
   - 우측 Gradle -> Tasks -> other -> compileQuerydsl 실행
   - 설정 위치에 QClass 생성 확인
      - **[중요]** @Entity가 포함된 Class들만 QClass가 생성됨
@@ -90,8 +90,7 @@
       - MAX(m.age), //최대 나이
       - MIN(m.age) //최소 나이
   - group by, having 
-    - **[참조]**
-      - me.study.jpaquerydsl.QuerydslBasicTest.class
+    - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
 - **Join[basic]**
   - **[중요]** 조인의 기본 문법은 첫 번째 파라미터에 조인 대상을 지정하고, 두 번째 파라미터에 별칭(alias)으로 사용할 Q 타입을 지정하면 된다
@@ -104,8 +103,7 @@
   - **[중요]** 세타조인(Theta Join) - JPA 특성상 @Entity 내 연관관계가 없으면 조인이 안될 거 같지만 가능!!
     - from 절에 여러 엔티티를 선택해서 세타 조인
     - **[중요]** 외부 조인 불가능
-    - **[참조]**
-      - me.study.jpaquerydsl.QuerydslBasicTest.class
+    - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
 - **Join[on]**
   - on절을 활용한 조인(JPA 2.1부터 지원)
@@ -119,16 +117,14 @@
     - **[중요]** 주의! 문법을 잘 봐야 한다. leftJoin() 부분에 일반 조인과 다르게 엔티티 하나만 들어간다.
       - 일반조인: leftJoin(member.team, team) <- entity 내 fk 매칭 추가o
       - on조인: from(member).leftJoin(team).on(xxx) <- entity 내 fk 매칭 추가x, 오직 on 절만
-  - **[참조]**
-    - me.study.jpaquerydsl.QuerydslBasicTest.class
+  - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
 - **Join[fetchJoin]**
   - 페치 조인은 SQL에서 제공하는 기능은 아니다. SQL조인을 활용해서 연관된 엔티티를 SQL 한번에 조회하는 기능이다.   
     주로 성능 최적화에 사용하는 방법이다.
   - fetch = FetchType.LAZY - 지연로딩할 때, 데이터 한번에 들고 오는 방법
   - join(), leftJoin() 등 조인 기능 뒤에 fetchJoin() 이라고 추가하면 된다.
-  - **[참조]**
-    - me.study.jpaquerydsl.QuerydslBasicTest.class
+  - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
 - **SubQuery**
   - com.querydsl.jpa.JPAExpressions 사용
@@ -140,13 +136,11 @@
       - 서브쿼리를 join으로 변경한다. (가능한 상황도 있고, 불가능한 상황도 있다.)
       - 애플리케이션에서 쿼리를 2번 분리해서 실행한다.
       - nativeSQL을 사용한다.
-  - **[참조]**
-    - me.study.jpaquerydsl.QuerydslBasicTest.class
+  - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
 - **Case**
   - select, 조건절(where), order by에서 사용 가능
-  - **[참조]**
-    - me.study.jpaquerydsl.QuerydslBasicTest.class
+  - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
 - **Constant, Concat**
   - Constant 
@@ -154,5 +148,28 @@
     - 최적화가 가능하면 SQL에 constant 값을 넘기지 않는다. 상수를 더하는 것 처럼 최적화가 어려우면 SQL에 constant 값을 넘긴다.
   - Concat 
     - member.age.stringValue() 부분이 중요한데, 문자가 아닌 다른 타입들은 stringValue()로 문자로 변환할 수 있다. 이 방법은 ENUM을 처리할 때도 자주 사용한다.
-  - **[참조]**
-    - me.study.jpaquerydsl.QuerydslBasicTest.class
+  - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
+------------
+- **Projection(Result)**
+  - Projection 
+    - select 대상 지정
+    - Projection 대상이 하나면 타입을 명확하게 지정할 수 있음 ex) String
+    - Projection 대상이 둘 이상이면 Tuple이나 DTO로 조회 
+    - **[중요]** DTO로 조회
+      - 순수 JPA
+        - 순수 JPA에서 DTO를 조회할 때는 new 명령어를 사용해야함
+        - DTO의 package이름을 다 적어줘야해서 지저분함
+        - 생성자 방식만 지원함
+      - Querydsl 빈 생성(Bean population)
+        - 다음 4가지 방법 지원
+          - 프로퍼티 접근 (MemberDto)
+          - 필드 직접 접근 (MemberDto)
+          - 생성자 사용 (MemberDto)
+          - 변수 명칭이 다를 경우 (UserDto)
+            - ExpressionUtils.as(source,alias) : 필드나, 서브 쿼리에 별칭 적용
+            - username.as("memberName") : 필드에 별칭 적용
+      - Querydsl DTO Q Class 생성
+        - 기본 필요 파라미터 생성자위에 @QueryProjection 사용
+        - 이 방법은 컴파일러로 타입을 체크할 수 있으므로 가장 안전한 방법이다.   
+          다만 DTO에 QueryDSL 어노테이션을 유지해야 하는 점과 DTO까지 Q 파일을 생성해야 하는 단점이 있다.
+- **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
