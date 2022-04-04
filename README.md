@@ -179,7 +179,11 @@
   - Where 다중 파라미터 사용
     - where 조건에 null 값은 무시된다.
     - 메서드를 다른 쿼리에서도 재활용 할 수 있다.
-    - 쿼리 자체의 가독성이 높아진다
+    - 쿼리 자체의 가독성이 높아진다.
     - **[중요]** 여러개 조합도 가능함 
       - null 체크는 주의해서 처리해야함
   - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
+------------
+- **Batch Query**
+  - **[중요]** JPQL 배치와 마찬가지로, 영속성 컨텍스트에 있는 엔티티를 무시하고 실행되기 때문에 배치 쿼리를
+      실행하고 나면 영속성 컨텍스트를 초기화 하는 것이 안전하다.
