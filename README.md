@@ -187,3 +187,8 @@
 - **Batch Query**
   - **[중요]** JPQL 배치와 마찬가지로, 영속성 컨텍스트에 있는 엔티티를 무시하고 실행되기 때문에 배치 쿼리를
       실행하고 나면 영속성 컨텍스트를 초기화 하는 것이 안전하다.
+  - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
+------------
+- **Sql function**
+  - SQL function은 JPA와 같이 Dialect에 등록된 내용만 호출할 수 있다.
+  - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
