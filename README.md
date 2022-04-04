@@ -172,4 +172,14 @@
         - 기본 필요 파라미터 생성자위에 @QueryProjection 사용
         - 이 방법은 컴파일러로 타입을 체크할 수 있으므로 가장 안전한 방법이다.   
           다만 DTO에 QueryDSL 어노테이션을 유지해야 하는 점과 DTO까지 Q 파일을 생성해야 하는 단점이 있다.
-- **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
+  - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
+------------
+- **동적쿼리**
+  - BooleanBuilder
+  - Where 다중 파라미터 사용
+    - where 조건에 null 값은 무시된다.
+    - 메서드를 다른 쿼리에서도 재활용 할 수 있다.
+    - 쿼리 자체의 가독성이 높아진다
+    - **[중요]** 여러개 조합도 가능함 
+      - null 체크는 주의해서 처리해야함
+  - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
