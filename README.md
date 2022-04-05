@@ -7,7 +7,7 @@
 - H2
 - SpringDataJPA
 - JUnit5
-- Querydsl
+- Querydsl 5.0.0
 
 ## 추가 정리
 - **Querydsl?**
@@ -220,6 +220,7 @@
   - 샘플 데이터 추가가 테스트 케이스 실행에 영향을 주지 않도록 yml 분리
   - **[참조]** [InitMember.class](src/main/java/me/study/jpaquerydsl/controller/InitMember.java)
   - **[참조]** [MemberController.class](src/main/java/me/study/jpaquerydsl/controller/MemberController.java)
+  - **[API-url]** http://localhost:8080/v1/members?teamName=teamB&ageGoe=31&ageLoe=35
 ------------
 - **[Spring Data JPA / Querydsl] Repository**
   - **[중요]** Querydsl 전용 기능인 회원 search를 작성할 수 없다. 사용자 정의 리포지토리 필요
@@ -258,6 +259,8 @@
 ------------
 - **[Spring Data JPA / Querydsl] API TEST**
   - **[참조]** [MemberController.class](src/main/java/me/study/jpaquerydsl/controller/MemberController.java)
+  - **[API-url]** http://localhost:8080/v2/members?size=5&page=2
+  - **[API-url]** http://localhost:8080/v3/members?size=5&page=0&username=member1
 ------------
 - **[Spring Data JPA에서 제공하는 Querydsl 기능]**
   - **[중요]** 제약이 커서 복잡한 실무 환경에서 사용하기에는 많이 부족하다. 
@@ -291,3 +294,16 @@
       - select로 시작할 수 없음 (from으로 시작해야함)
     - QueryFactory 를 제공하지 않음
     - 스프링 데이터 Sort 기능이 정상 동작하지 않음
+  - **[중요]** QuerydslRepositorySupport 직접 만들기
+    - 스프링 데이터가 제공하는 QuerydslRepositorySupport 가 지닌 한계를 극복하기 위해 
+    - 장점
+      - 스프링 데이터가 제공하는 페이징을 편리하게 변환
+      - 페이징과 카운트 쿼리 분리 가능
+      - 스프링 데이터 Sort 지원
+      - select() , selectFrom() 으로 시작 가능
+      - EntityManager , QueryFactory 제공
+    - **[참조]** [CustomQuerydslRepositorySupport.class](src/main/java/me/study/jpaquerydsl/repository/support/CustomQuerydslRepositorySupport.java)
+    - **[참조]** [MemberSupportRepository.class](src/main/java/me/study/jpaquerydsl/repository/MemberSupportRepository.java)
+    - **[참조]** [MemberController.class](src/main/java/me/study/jpaquerydsl/controller/MemberController.java)
+    - **[API-url]** http://localhost:8080/v4/members?page=0&size=10&sort=team,desc&sort=username,asc
+    - **[API-url]** http://localhost:8080/v5/members?page=0&size=10&sort=team,asc&sort=username,desc

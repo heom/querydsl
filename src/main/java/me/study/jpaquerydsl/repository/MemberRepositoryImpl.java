@@ -67,8 +67,8 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
     /**
      * @Description [Spring Data JPA / Querydsl] Paging
      **/
-    @Override
-    public Page<MemberTeamDto> searchPageSimple(MemberSearchCondition condition, Pageable pageable) { // Deprecated
+    @Override // fetchResults() Deprecated
+    public Page<MemberTeamDto> searchPageSimple(MemberSearchCondition condition, Pageable pageable) {
         QueryResults<MemberTeamDto> results = queryFactory.select(new QMemberTeamDto(
                         member.id.as("memberId")
                         , member.username
