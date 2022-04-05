@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+import static me.study.jpaquerydsl.entity.QMember.member;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -128,5 +129,30 @@ class MemberRepositoryTest {
                 ,"member2"
                 ,"member3"
                 ,"member4");
+    }
+
+    /**
+     * @Description [Spring Data JPA에서 제공하는 Querydsl 기능] QuerydslPredicateExecutor 인터페이스
+     **/
+    @Test
+    public void querydslPredicateExecutorTest(){
+        Team teamA = new Team("teamA");
+        Team teamB = new Team("teamB");
+        em.persist(teamA);
+        em.persist(teamB);
+        Member member1 = new Member("member1", 10, teamA);
+        Member member2 = new Member("member2", 20, teamA);
+        Member member3 = new Member("member3", 30, teamB);
+        Member member4 = new Member("member4", 40, teamB);
+        em.persist(member1);
+        em.persist(member2);
+        em.persist(member3);
+        em.persist(member4);
+        
+        Iterable<Member> result = memberRepository.findAll(member.age.between(10, 40).and(member.username.eq("member1")));
+        for (Member m : result) {
+            System.out.println(m);
+        }
+        
     }
 }

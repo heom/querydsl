@@ -258,3 +258,36 @@
 ------------
 - **[Spring Data JPA / Querydsl] API TEST**
   - **[참조]** [MemberController.class](src/main/java/me/study/jpaquerydsl/controller/MemberController.java)
+------------
+- **[Spring Data JPA에서 제공하는 Querydsl 기능]**
+  - **[중요]** 제약이 커서 복잡한 실무 환경에서 사용하기에는 많이 부족하다. 
+------------
+- **[Spring Data JPA에서 제공하는 Querydsl 기능] QuerydslPredicateExecutor 인터페이스**
+  - **[참조]** [공식문서](https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#core.extensions.querydsl)
+  - 한계점
+    - 조인X (묵시적 조인은 가능하지만 left join이 불가능하다.)
+    - 클라이언트가 Querydsl에 의존해야 한다. 서비스 클래스가 Querydsl이라는 구현 기술에 의존해야 한다.
+    - 복잡한 실무환경에서 사용하기에는 한계가 명확하다.
+  - QuerydslPredicateExecutor 는 Pagable, Sort를 모두 지원하고 정상 동작한다.
+  - **[참조]** [MemberRepository.class](src/main/java/me/study/jpaquerydsl/repository/MemberRepository.java)
+  - **[참조]** [MemberRepositoryTest.class](src/test/java/me/study/jpaquerydsl/repository/MemberRepositoryTest.java)
+------------
+- **[Spring Data JPA에서 제공하는 Querydsl 기능] Querydsl Web**
+  - **[참조]** [공식문서](https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#core.web.type-safe)
+  - 한계점
+    - 단순한 조건만 가능
+    - 조건을 커스텀하는 기능이 복잡하고 명시적이지 않음
+    - 컨트롤러가 Querydsl에 의존
+    - 복잡한 실무환경에서 사용하기에는 한계가 명확
+------------
+- **[Spring Data JPA에서 제공하는 Querydsl 기능] QuerydslRepositorySupport**
+  - 장점
+    - getQuerydsl().applyPagination() 스프링 데이터가 제공하는 페이징을 Querydsl로 편리하게 변환가능(단! Sort는 오류발생)
+    - from() 으로 시작 가능(최근에는 QueryFactory를 사용해서 select() 로 시작하는 것이 더 명시적)
+    - EntityManager 제공
+  - 한계점
+    - Querydsl 3.x 버전을 대상으로 만듬
+    - Querydsl 4.x에 나온 JPAQueryFactory로 시작할 수 없음
+      - select로 시작할 수 없음 (from으로 시작해야함)
+    - QueryFactory 를 제공하지 않음
+    - 스프링 데이터 Sort 기능이 정상 동작하지 않음
