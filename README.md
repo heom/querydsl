@@ -251,6 +251,7 @@
 - ------------
 - **[Spring Data JPA / Querydsl] Sort**
   - 스프링 데이터의 정렬을 Querydsl의 정렬로 직접 전환하는 방법은 아래 코드를 참고
+  ![image](https://user-images.githubusercontent.com/42602972/161713429-3e354911-dd18-4fb3-8f3f-94cf3bfffb8b.png)
     - **[중요]** 정렬( Sort )은 조건이 조금만 복잡해져도 Pageable 의 Sort 기능을 사용하기 어렵다.   
       루트 엔티티 범위를 넘어가는 동적 정렬 기능이 필요하면 스프링 데이터 페이징이 제공하는 Sort 를 사용하기 보다는
       파라미터를 받아서 직접 처리하는 것을 권장한다.
