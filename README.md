@@ -227,6 +227,7 @@
     - 사용자 정의 인터페이스 구현
     - 스프링 데이터 리포지토리에 사용자 정의 인터페이스 상속
   - **[중요]** 꼭 사용자 정의 인터페이스 구현할 경우는 기본 repository 인터페이스명 + Impl
+  ![image](https://user-images.githubusercontent.com/42602972/161700892-6de59840-9633-49c7-9719-a2e794d18ce9.png)
   - **[참조]** [MemberRepository.class](src/main/java/me/study/jpaquerydsl/repository/MemberRepository.java)
   - **[참조]** [MemberRepositoryCustom.class](src/main/java/me/study/jpaquerydsl/repository/MemberRepositoryCustom.java)
   - **[참조]** [MemberRepositoryImpl.class](src/main/java/me/study/jpaquerydsl/repository/MemberRepositoryImpl.java)
