@@ -232,3 +232,19 @@
   - **[참조]** [MemberRepositoryCustom.class](src/main/java/me/study/jpaquerydsl/repository/MemberRepositoryCustom.java)
   - **[참조]** [MemberRepositoryImpl.class](src/main/java/me/study/jpaquerydsl/repository/MemberRepositoryImpl.java)
   - **[참조]** [MemberRepositoryTest.class](src/test/java/me/study/jpaquerydsl/repository/MemberRepositoryTest.java)
+------------
+- **[Spring Data JPA / Querydsl] Paging**
+  - 스프링 데이터의 Page, Pageable을 활용
+  - 사용방법
+    - 전체 카운트를 한번에 조회하는 단순한 방법
+      - **[중요]** 기존 사용하던 fetchResults() Deprecated
+    - **[중요]** 데이터 내용과 전체 카운트를 별도로 조회하는 방법 - 이거 사용하자 그냥!!!
+      - **[중요]** Count query 최적화
+        - PageableExecutionUtils.getPage() 
+        - 스프링 데이터 라이브러리가 제공
+        - Count query 생략 가능한 경우 생략해서 처리
+          - 페이지 시작이면서 컨텐츠 사이즈가 페이지 사이즈보다 작을 때
+          - 마지막 페이지 일 때 (offset + 컨텐츠 사이즈를 더해서 전체 사이즈 구함)
+  - **[참조]** [MemberRepositoryCustom.class](src/main/java/me/study/jpaquerydsl/repository/MemberRepositoryCustom.java)
+  - **[참조]** [MemberRepositoryImpl.class](src/main/java/me/study/jpaquerydsl/repository/MemberRepositoryImpl.java)
+  - **[참조]** [MemberRepositoryTest.class](src/test/java/me/study/jpaquerydsl/repository/MemberRepositoryTest.java)
