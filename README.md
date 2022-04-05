@@ -215,3 +215,8 @@
   - **[중요]** 조건절 재사용 가능
   - **[참조]** [MemberJpaRepository.class](src/main/java/me/study/jpaquerydsl/repository/MemberJpaRepository.java)
   - **[참조]** [MemberJpaRepositoryTest.class](src/test/java/me/study/jpaquerydsl/repository/MemberJpaRepositoryTest.java)
+------------
+- **[순수 JPA / Querydsl] API TEST**
+  - 샘플 데이터 추가가 테스트 케이스 실행에 영향을 주지 않도록 yml 분리
+  - **[참조]** [InitMember.class](src/main/java/me/study/jpaquerydsl/controller/InitMember.java)
+  - **[참조]** [MemberController.class](src/main/java/me/study/jpaquerydsl/controller/MemberController.java)
