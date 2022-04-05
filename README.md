@@ -14,7 +14,7 @@
   - SPRING-DATA-JPA만 사용할 경우, 복잡한 쿼리와 동적쿼리 사용이 어려움  
     따라서, 상기 문제를 Querydsl 추가로 사용하여 해결함
 ------------
-- **Querydsl Setting**
+- **[환경설정] Querydsl Setting**
   - **[참조]** 강의 QueryDSL 설정과 검증
   - **[중요]** 스프링 부트 2.6 이상, Querydsl 5.0 부터 설정 방법이 약간 변경됨
   - **[참조]** [build.gradle](build.gradle) 
@@ -22,11 +22,11 @@
   - 설정 위치에 QClass 생성 확인
      - **[중요]** @Entity가 포함된 Class들만 QClass가 생성됨
 ------------
-- **JPQL vs Querydsl**
+- **[기본문법] JPQL vs Querydsl**
   - JPQL은 Query를 String 형태로 만들기 때문에, runtime error 발생
   - Querydsl은 객체지향 자바로 만들기 때문에, compile error 발생
 ------------
-- **Where**
+- **[기본문법] Where**
   - 기본
     - ex)
       - member.username.eq("member1") // username = 'member1'
@@ -57,7 +57,7 @@
                 )  
                 .fetchOne();
 ------------
-- **Select**
+- **[기본문법] Select**
   - fetch() : 리스트 조회, 데이터 없으면 빈 리스트 반환
   - fetchOne() : 단 건 조회
     - 결과가 없으면 : null
@@ -74,14 +74,14 @@
         .from(member)  
         .fetchOne();  
 ------------
-- **Sort**
+- **[기본문법] Sort**
   - desc() , asc() : 일반 정렬
   - nullsLast() , nullsFirst() : null 데이터 순서 부여
 ------------
-- **Paging**
+- **[기본문법] Paging**
   - **[중요]** 기존 사용하던 fetchResults() Deprecated, 리스트와 총 갯수 따로 쿼리 작성 필요
 ------------
-- **Aggregate**
+- **[기본문법] Aggregate**
   - **[중요]** List<Tuple> 객체로 해당 값 가져옴, 하지만 DTO 가져오는 방법을 실무에서 더 많이 사용
     - ex)
       - COUNT(m), //회원수
@@ -92,7 +92,7 @@
   - group by, having 
     - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
-- **Join[basic]**
+- **[기본문법] Join(basic)**
   - **[중요]** 조인의 기본 문법은 첫 번째 파라미터에 조인 대상을 지정하고, 두 번째 파라미터에 별칭(alias)으로 사용할 Q 타입을 지정하면 된다
     - ex)
       - join(조인 대상, 별칭으로 사용할 Q타입)
@@ -105,7 +105,7 @@
     - **[중요]** 외부 조인 불가능
     - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
-- **Join[on]**
+- **[기본문법] Join(on)**
   - on절을 활용한 조인(JPA 2.1부터 지원)
   - 조인 대상 필터링
     - on 절을 활용해 조인 대상을 필터링 할 때, 외부조인이 아니라 내부조인(inner join)을 사용하면,  
@@ -119,14 +119,14 @@
       - on조인: from(member).leftJoin(team).on(xxx) <- entity 내 fk 매칭 추가x, 오직 on 절만
   - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
-- **Join[fetchJoin]**
+- **[기본문법] Join(fetchJoin)**
   - 페치 조인은 SQL에서 제공하는 기능은 아니다. SQL조인을 활용해서 연관된 엔티티를 SQL 한번에 조회하는 기능이다.   
     주로 성능 최적화에 사용하는 방법이다.
   - fetch = FetchType.LAZY - 지연로딩할 때, 데이터 한번에 들고 오는 방법
   - join(), leftJoin() 등 조인 기능 뒤에 fetchJoin() 이라고 추가하면 된다.
   - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
-- **SubQuery**
+- **[기본문법] SubQuery**
   - com.querydsl.jpa.JPAExpressions 사용
   - **[중요]** from 절의 서브쿼리 한계
     - JPA JPQL 서브쿼리의 한계점으로 from 절의 서브쿼리(인라인 뷰)는 지원하지 않는다.   
@@ -138,11 +138,11 @@
       - nativeSQL을 사용한다.
   - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
-- **Case**
+- **[기본문법] Case**
   - select, 조건절(where), order by에서 사용 가능
   - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
-- **Constant, Concat**
+- **[기본문법] Constant, Concat**
   - Constant 
     - 상수가 필요하면 Expressions.constant(xxx) 사용
     - 최적화가 가능하면 SQL에 constant 값을 넘기지 않는다. 상수를 더하는 것 처럼 최적화가 어려우면 SQL에 constant 값을 넘긴다.
@@ -150,7 +150,7 @@
     - member.age.stringValue() 부분이 중요한데, 문자가 아닌 다른 타입들은 stringValue()로 문자로 변환할 수 있다. 이 방법은 ENUM을 처리할 때도 자주 사용한다.
   - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
-- **Projection(Result)**
+- **[중급문법] Projection(Result)**
   - Projection 
     - select 대상 지정
     - Projection 대상이 하나면 타입을 명확하게 지정할 수 있음 ex) String
@@ -174,7 +174,7 @@
           다만 DTO에 QueryDSL 어노테이션을 유지해야 하는 점과 DTO까지 Q 파일을 생성해야 하는 단점이 있다.
   - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
-- **동적쿼리**
+- **[중급문법] 동적쿼리**
   - BooleanBuilder
   - Where 다중 파라미터 사용
     - where 조건에 null 값은 무시된다.
@@ -184,11 +184,34 @@
       - null 체크는 주의해서 처리해야함
   - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
-- **Batch Query**
+- **[중급문법] Batch Query**
   - **[중요]** JPQL 배치와 마찬가지로, 영속성 컨텍스트에 있는 엔티티를 무시하고 실행되기 때문에 배치 쿼리를
       실행하고 나면 영속성 컨텍스트를 초기화 하는 것이 안전하다.
   - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
 ------------
-- **Sql function**
+- **[중급문법] Sql function**
   - SQL function은 JPA와 같이 Dialect에 등록된 내용만 호출할 수 있다.
   - **[참조]** [QuerydslBasicTest.class](src/test/java/me/study/jpaquerydsl/QuerydslBasicTest.java)
+------------
+- **[순수 JPA / Querydsl] Repository**
+  - Querydsl
+    - JPAQueryFactory 스프링 빈 등록 해도 되고 아니면 repository 생성자에 넣어도 됨
+      - **[참조]** [JpaQuerydslApplication.class](src/main/java/me/study/jpaquerydsl/JpaQuerydslApplication.java)
+      - **[참조]** [MemberJpaRepository.class](src/main/java/me/study/jpaquerydsl/repository/MemberJpaRepository.java)
+    - 동시성 문제는 걱정하지 않아도 된다. 왜냐하면 여기서 스프링이 주입해주는 엔티티 매니저는 실제  
+      동작 시점에 진짜 엔티티 매니저를 찾아주는 프록시용 가짜 엔티티 매니저이다. 이 가짜 엔티티 매니저는  
+      실제 사용 시점에 트랜잭션 단위로 실제 엔티티 매니저(영속성 컨텍스트)를 할당해준다.
+------------
+- **[순수 JPA / Querydsl] 동적쿼리 Builder**
+  - 예제는 @QueryProjection 사용, 해당 DTO가 Querydsl을 의존하게 된다. 이런 의존이 싫으면,  
+    해당 에노테이션을 제거하고, Projection.bean(), fields(), constructor() 을 사용하면 된다.
+  - **[중요]** 동적쿼리가 없을 경우, 즉 모든 파라미터가 없이 들어오는 경우 많은 데이터를 한번에 가져오니 왠만하면 limit 할 때 사용하자!!
+  - **[참조]** [MemberSearchCondition.class](src/main/java/me/study/jpaquerydsl/dto/MemberSearchCondition.java)
+  - **[참조]** [MemberTeamDto.class](src/main/java/me/study/jpaquerydsl/dto/MemberTeamDto.java)
+  - **[참조]** [MemberJpaRepository.class](src/main/java/me/study/jpaquerydsl/repository/MemberJpaRepository.java)
+  - **[참조]** [MemberJpaRepositoryTest.class](src/test/java/me/study/jpaquerydsl/repository/MemberJpaRepositoryTest.java)
+------------
+- **[순수 JPA / Querydsl] 동적쿼리 Where**
+  - **[중요]** 조건절 재사용 가능
+  - **[참조]** [MemberJpaRepository.class](src/main/java/me/study/jpaquerydsl/repository/MemberJpaRepository.java)
+  - **[참조]** [MemberJpaRepositoryTest.class](src/test/java/me/study/jpaquerydsl/repository/MemberJpaRepositoryTest.java)

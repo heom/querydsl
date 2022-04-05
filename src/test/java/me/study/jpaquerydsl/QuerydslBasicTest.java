@@ -84,7 +84,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Where]
+     * @Description [기본문법] Where
      **/
     @Test
     public void search(){
@@ -97,7 +97,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Where] and 쉼표로 가능
+     * @Description [기본문법] Where - and 쉼표로 가능
      **/
     @Test
     public void searchAndParam(){
@@ -112,7 +112,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Select]
+     * @Description [기본문법] Select
      **/
     @Test
     public void resultFetch(){
@@ -149,7 +149,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Sort]
+     * @Description [기본문법] Sort
      * 1. 회원 나이 내림차순(desc)
      * 2. 회원 이름 올림차순(asc)
      * 단, 2에서 회원 이름이 없으면 마지막 출력(nulls last)
@@ -175,7 +175,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Paging]
+     * @Description [기본문법] Paging
      **/
     @Test
     public void paging1(){
@@ -190,7 +190,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Paging] Deprecated
+     * @Description [기본문법] Paging - Deprecated
      **/
     @Test
     public void paging2() {
@@ -222,7 +222,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Aggregate] 기본
+     * @Description [기본문법] Aggregate
      **/
     @Test
     public void aggregation(){
@@ -244,7 +244,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Aggregate] group by, having
+     * @Description [기본문법] Aggregate - group by, having
      * 팀의 이름과 각 팀의 평균 연령
      **/
     @Test
@@ -267,7 +267,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Join[basic]]
+     * @Description [기본문법] Join(basic)
      * 팀 A에 소속된 모든 회원
      **/
     @Test
@@ -284,7 +284,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Join[basic]] 세타조인(Theta Join)
+     * @Description [기본문법] Join(basic) - 세타조인(Theta Join)
      * 세타 조인(연관관계가 없는 필드로 조인)
      * 회원의 이름이 팀 이름과 같은 회원 조회
      **/
@@ -306,7 +306,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Join[on]] 조인 대상 필터링
+     * @Description [기본문법] Join(on) - 조인 대상 필터링
      * 회원과 팀을 조인하면서, 팀 이름이 teamA인 팀만 조인, 회원은 모두 조회
      * JPQL: SELECT m, t FROM Member m LEFT JOIN m.team t on t.name = 'teamA'
      * SQL: SELECT m.*, t.* FROM Member m LEFT JOIN Team t ON m.TEAM_ID=t.id and t.name='teamA'
@@ -326,7 +326,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Join[on]] 연관관계 없는 entity 외부 조인
+     * @Description [기본문법] Join(on) - 연관관계 없는 entity 외부 조인
      * 회원의 이름과 팀의 이름이 같은 대상 외부 조인
      * JPQL: SELECT m, t FROM Member m LEFT JOIN Team t on m.username = t.name
      * SQL: SELECT m.*, t.* FROM Member m LEFT JOIN Team t ON m.username = t.name
@@ -349,13 +349,13 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Join[fetchJoin]] EntityManager를 만드는 Factory -> PersistenceUnitUtil() 를 사용할 수 있게 해줌
+     * @Description [기본문법] Join(fetchJoin) - EntityManager를 만드는 Factory -> PersistenceUnitUtil() 를 사용할 수 있게 해줌
      **/
     @PersistenceUnit
     EntityManagerFactory emf;
 
     /**
-     * @Description [Join[fetchJoin]] 페치 조인 미적용
+     * @Description [기본문법] Join(fetchJoin) - 페치 조인 미적용
      **/
     @Test
     public void fetchJoinNo(){
@@ -372,7 +372,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Join[fetchJoin]] 페치 조인 적용
+     * @Description [기본문법] Join(fetchJoin) - 페치 조인 적용
      **/
     @Test
     public void fetchJoinUse(){
@@ -390,7 +390,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [SubQuery] 서브 쿼리 eq 사용
+     * @Description [기본문법] SubQuery - 서브 쿼리 eq 사용
      * 나이가 가장 많은 회원 조회
      **/
     @Test
@@ -410,7 +410,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [SubQuery] 서브 쿼리 goe 사용
+     * @Description [기본문법] SubQuery - 서브 쿼리 goe 사용
      * 나이가 평균 나이 이상인 회원
      **/
     @Test
@@ -430,7 +430,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [SubQuery] 서브쿼리 여러 건 처리 in 사용
+     * @Description [기본문법] SubQuery - 서브쿼리 여러 건 처리 in 사용
      * 나이가 10 초과인 회원
      **/
     @Test
@@ -451,7 +451,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [SubQuery] select 절에 subquery
+     * @Description [기본문법] SubQuery - select 절에 subquery
      **/
     @Test
     public void subQuerySelect(){
@@ -474,7 +474,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [SubQuery] static import 활용
+     * @Description [기본문법] SubQuery - static import 활용
      * import static com.querydsl.jpa.JPAExpressions.select;
      **/
     @Test
@@ -493,7 +493,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Case] 단순한 조건
+     * @Description [기본문법] Case - 단순한 조건
      **/
     @Test
     public void basicCase(){
@@ -510,7 +510,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Case] 복잡한 조건
+     * @Description [기본문법] Case - 복잡한 조건
      **/
     @Test
     public void complexCase(){
@@ -528,7 +528,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Case] order by, Case 문 함께 사용
+     * @Description [기본문법] Case - order by, Case 문 함께 사용
      * 0 ~ 30살이 아닌 회원을 가장 먼저 출력
      * 0 ~ 20살 회원 출력
      * 21 ~ 30살 회원 출력
@@ -555,7 +555,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Constant, Concat] Constant
+     * @Description [기본문법] Constant, Concat - Constant
      **/
     @Test
     public void constant(){
@@ -568,7 +568,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Constant, Concat] Concat
+     * @Description [기본문법] Constant, Concat - Concat
      **/
     @Test
     public void concat(){
@@ -582,7 +582,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Projection(Result)] 하나의 타입
+     * @Description [중급문법] Projection(Result) - 하나의 타입
      **/
     @Test
     public void simpleProjection(){
@@ -597,7 +597,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Projection(Result)] 둘 이상의 타입(Tuple)
+     * @Description [중급문법] Projection(Result) - 둘 이상의 타입(Tuple)
      **/
     @Test
     public void tupleProjection(){
@@ -616,7 +616,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Projection(Result)] 둘 이상의 타입(DTO) 변수명 일치 - 순수 JPQL 경우
+     * @Description [중급문법] Projection(Result) - 둘 이상의 타입(DTO) 변수명 일치 - 순수 JPQL 경우
      * 생성자를 사용해줘야함
      **/
     @Test
@@ -630,7 +630,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Projection(Result)] 둘 이상의 타입(DTO) 변수명 일치 - Querydsl
+     * @Description [중급문법] Projection(Result) - 둘 이상의 타입(DTO) 변수명 일치 - Querydsl
      * 프로퍼티 접근 - Setter
      **/
     @Test
@@ -648,7 +648,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Projection(Result)] 둘 이상의 타입(DTO) 변수명 일치 - Querydsl
+     * @Description [중급문법] Projection(Result) - 둘 이상의 타입(DTO) 변수명 일치 - Querydsl
      * 필드 직접 접근
      **/
     @Test
@@ -666,7 +666,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Projection(Result)] 둘 이상의 타입(DTO) 변수명 일치 - Querydsl
+     * @Description [중급문법] Projection(Result) - 둘 이상의 타입(DTO) 변수명 일치 - Querydsl
      * 생성자 사용
      **/
     @Test
@@ -684,7 +684,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Projection(Result)] 둘 이상의 타입(DTO) 변수명 불일치(username != name) - Querydsl
+     * @Description [중급문법] Projection(Result) - 둘 이상의 타입(DTO) 변수명 불일치(username != name) - Querydsl
      * 별칭 사용
      **/
     @Test
@@ -708,7 +708,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Projection(Result)] 둘 이상의 타입(DTO) 변수명 일치 - Querydsl(@QueryProjection)
+     * @Description [중급문법] Projection(Result) - 둘 이상의 타입(DTO) 변수명 일치 - Querydsl(@QueryProjection)
      * Q Class 생성
      **/
     @Test
@@ -724,7 +724,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [동적쿼리] BooleanBuilder
+     * @Description [중급문법] 동적쿼리 - BooleanBuilder
      **/
     @Test
     public void 동적쿼리_BooleanBuilder(){
@@ -752,7 +752,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [동적쿼리] Where 다중 파라미터 사용
+     * @Description [중급문법] 동적쿼리 - Where 다중 파라미터 사용
      **/
     @Test
     public void 동적쿼리_WhereParam(){
@@ -781,7 +781,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Batch Query] - update
+     * @Description [중급문법] Batch Query - update
      **/
     @Test
     public void bulkUpdate(){
@@ -804,7 +804,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Batch Query] - update add
+     * @Description [중급문법] Batch Query - update add
      **/
     @Test
     public void bulkAdd(){
@@ -826,7 +826,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Batch Query] - delete
+     * @Description [중급문법] Batch Query - delete
      **/
     @Test
     public void bulkDelete(){
@@ -848,7 +848,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Sql function] - replace 사용
+     * @Description [중급문법] Sql function - replace 사용
      **/
     @Test
     public void sqlFunction(){
@@ -865,7 +865,7 @@ public class QuerydslBasicTest {
     }
 
     /**
-     * @Description [Sql function] - lower 사용
+     * @Description [중급문법] Sql function - lower 사용
      **/
     @Test
     public void sqlFunction2(){
