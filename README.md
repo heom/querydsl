@@ -248,3 +248,6 @@
   - **[참조]** [MemberRepositoryCustom.class](src/main/java/me/study/jpaquerydsl/repository/MemberRepositoryCustom.java)
   - **[참조]** [MemberRepositoryImpl.class](src/main/java/me/study/jpaquerydsl/repository/MemberRepositoryImpl.java)
   - **[참조]** [MemberRepositoryTest.class](src/test/java/me/study/jpaquerydsl/repository/MemberRepositoryTest.java)
+------------
+- **[Spring Data JPA / Querydsl] API TEST**
+  - **[참조]** [MemberController.class](src/main/java/me/study/jpaquerydsl/controller/MemberController.java)
