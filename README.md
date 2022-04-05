@@ -220,3 +220,14 @@
   - 샘플 데이터 추가가 테스트 케이스 실행에 영향을 주지 않도록 yml 분리
   - **[참조]** [InitMember.class](src/main/java/me/study/jpaquerydsl/controller/InitMember.java)
   - **[참조]** [MemberController.class](src/main/java/me/study/jpaquerydsl/controller/MemberController.java)
+------------
+- **[Spring Data JPA / Querydsl] Repository**
+  - **[중요]** Querydsl 전용 기능인 회원 search를 작성할 수 없다. 사용자 정의 리포지토리 필요
+    - 사용자 정의 인터페이스 작성
+    - 사용자 정의 인터페이스 구현
+    - 스프링 데이터 리포지토리에 사용자 정의 인터페이스 상속
+  - **[중요]** 꼭 사용자 정의 인터페이스 구현할 경우는 기본 repository 인터페이스명 + Impl
+  - **[참조]** [MemberRepository.class](src/main/java/me/study/jpaquerydsl/repository/MemberRepository.java)
+  - **[참조]** [MemberRepositoryCustom.class](src/main/java/me/study/jpaquerydsl/repository/MemberRepositoryCustom.java)
+  - **[참조]** [MemberRepositoryImpl.class](src/main/java/me/study/jpaquerydsl/repository/MemberRepositoryImpl.java)
+  - **[참조]** [MemberRepositoryTest.class](src/test/java/me/study/jpaquerydsl/repository/MemberRepositoryTest.java)
